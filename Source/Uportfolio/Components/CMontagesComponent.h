@@ -16,7 +16,7 @@ public:
 		EStateType Type;
 
 	UPROPERTY(EditAnywhere)
-		class UAnimMontage* AnimMotage;
+		class UAnimMontage* AnimMontage;
 
 	UPROPERTY(EditAnywhere)
 		float PlayRate = 1.f;
@@ -41,14 +41,14 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	void PlayBackstep();
 	void PlayHitted();
 	void PlayJump();
+	void PlayTwoJump();
 
 
 
 private:
-	void PlayAimMontage(EStateType InStateType);
+	void PlayAnimMontage(EStateType InStateType);
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "DataTable")

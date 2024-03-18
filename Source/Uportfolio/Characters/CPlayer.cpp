@@ -5,7 +5,6 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CStatusComponent.h"
 #include "Components/COptionComponent.h"
-#include "Components/CStateComponent.h"
 #include "Components/CMontagesComponent.h"
 
 ACPlayer::ACPlayer()
@@ -52,19 +51,26 @@ ACPlayer::ACPlayer()
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 
 	
+
+	
 }
 
 void ACPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
 
+	State->IsIdleMode();
+
+	State->OnStateTypeChanged.AddDynamic(this, &ACPlayer::OnStateTypeChanged);
+
+	
 }
 
 void ACPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 
 }
 
@@ -77,6 +83,10 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("HorizontalLook", this, &ACPlayer::OnHorizontalLook);
 	PlayerInputComponent->BindAxis("VerticalLook", this, &ACPlayer::OnVerticalLook);
 	PlayerInputComponent->BindAxis("Zoom", this, &ACPlayer::OnZoom);
+
+
+	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Pressed, this, &ACPlayer::OnJump);
+	
 
 }
 
@@ -120,4 +130,53 @@ void ACPlayer::OnZoom(float InAxis)
 
 	SpringArm->TargetArmLength += rate;
 	SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength, Option->GetZoomMin(), Option->GetZoomMax());
+}
+
+void ACPlayer::OnJump()
+{
+	
+	
+	if (State->Type == EStateType::Idle && bCanJump == false)
+	{
+		State->SetJumpMode();
+	}
+	else if (State->Type == EStateType::Jump && bCanJump == true)
+	{
+		
+		State->SetTwoJumpMode();
+
+	}
+	
+	
+
+}
+
+void ACPlayer::Begin_Jump()
+{
+	Montages->PlayJump();
+	Jump();
+}
+
+
+
+void ACPlayer::Begin_TwoJump()
+{
+	Montages->PlayTwoJump();
+	Jump();
+}
+
+void ACPlayer::End_Jump()
+{
+	State->SetIdleMode();
+}
+
+
+
+void ACPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
+{
+	switch (InNewType)
+	{
+		case EStateType::Jump:		Begin_Jump();		break;
+		case EStateType::TwoJump:	Begin_TwoJump();	break;
+	}
 }

@@ -7,7 +7,7 @@
 UENUM(BlueprintType)
 enum class EStateType : uint8
 {
-	Idle,Jump,Backstep,Hitted, Max
+	Idle,Jump,TwoJump,Hitted,Max
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FStateTypeChangedSignature, EStateType, InPrevType, EStateType, InNewType);
@@ -31,12 +31,12 @@ public:
 		FORCEINLINE bool IsJumpMode() { return Type == EStateType::Jump; }
 
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsBackstepMode() { return Type == EStateType::Backstep; }
+		FORCEINLINE bool IsTwoJumpMode() { return Type == EStateType::TwoJump; }
 
 public:
 	void SetIdleMode();
 	void SetJumpMode();
-	void SetBackstepMode();
+	void SetTwoJumpMode();
 	void SetHittedMode();
 
 private:
@@ -49,7 +49,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 		FStateTypeChangedSignature OnStateTypeChanged;
 
-private:
+public:
 	EStateType Type;
 
 		

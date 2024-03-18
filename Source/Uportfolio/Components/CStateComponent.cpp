@@ -25,9 +25,9 @@ void UCStateComponent::SetJumpMode()
 
 }
 
-void UCStateComponent::SetBackstepMode()
+void UCStateComponent::SetTwoJumpMode()
 {
-	ChangeType(EStateType::Backstep);
+	ChangeType(EStateType::TwoJump);
 
 }
 

@@ -1,0 +1,3 @@
+,Type,AnimMontage,PlayRate,StartSection,bCanMove
+1,Jump,AnimMontage'/Game/Frank_Slash_Pack/Frank_Assassin/Animations/SK_Mannequin_RM/Frank_RPG_Assassin_Jump_02_Montage.Frank_RPG_Assassin_Jump_02_Montage',2,,FALSE
+2,TwoJump,AnimMontage'/Game/Frank_Slash_Pack/Frank_Assassin/Animations/SK_Mannequin_RM/Frank_RPG_Assassin_Jump_01_Montage.Frank_RPG_Assassin_Jump_01_Montage',1.5,,FALSE

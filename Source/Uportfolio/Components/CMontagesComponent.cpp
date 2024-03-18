@@ -28,45 +28,50 @@ void UCMontagesComponent::BeginPlay()
 
 			if (data->Type == (EStateType)i)
 			{
-				Datas[i] = data;
+				Datas[i] = data; 
 				break;
 			}
 
 		}
 
 	}
+
+	
 	
 }
 
 
 
-void UCMontagesComponent::PlayBackstep()
-{
-	PlayAimMontage(EStateType::Backstep);
-}
-
 void UCMontagesComponent::PlayHitted()
 {
-	PlayAimMontage(EStateType::Hitted);
+	PlayAnimMontage(EStateType::Hitted);
 
 }
 
 void UCMontagesComponent::PlayJump()
 {
-	PlayAimMontage(EStateType::Jump);
+	PlayAnimMontage(EStateType::Jump);
 
 }
 
-void UCMontagesComponent::PlayAimMontage(EStateType InStateType)
+void UCMontagesComponent::PlayTwoJump()
+{
+	PlayAnimMontage(EStateType::TwoJump);
+
+}
+
+
+
+void UCMontagesComponent::PlayAnimMontage(EStateType InStateType)
 {
 	ACharacter* ownerCharacter = Cast<ACharacter>(GetOwner());
 	CheckNull(ownerCharacter);
 
 	FMontageData* data = Datas[(int32)InStateType];
 
-	if (!!data && !!data->AnimMotage)
+	if (!!data && !!data->AnimMontage)
 	{
-		ownerCharacter->PlayAnimMontage(data->AnimMotage, data->PlayRate, data->StartSection);
+		ownerCharacter->PlayAnimMontage(data->AnimMontage, data->PlayRate, data->StartSection);
 	}
 }
 

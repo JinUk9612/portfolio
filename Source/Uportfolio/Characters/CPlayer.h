@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Components/CStateComponent.h"
 #include "CPlayer.generated.h"
 
 UCLASS()
@@ -29,6 +30,23 @@ private:
 	void OnVerticalLook(float InAxis);
 	void OnZoom(float InAxis);
 
+
+private:
+	void OnJump();
+
+	void Begin_Jump();
+
+	void Begin_TwoJump();
+
+public:
+	void End_Jump();
+	FORCEINLINE void OnTwo_Jump() { bCanJump = true; }
+	FORCEINLINE void OffTwo_Jump() { bCanJump = false; }
+
+
+private:
+	UFUNCTION()
+		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
 	//Scene Component
 private:
 	UPROPERTY(VisibleDefaultsOnly)
@@ -51,4 +69,7 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCMontagesComponent* Montages;
+
+private:
+	bool bCanJump;
 };
